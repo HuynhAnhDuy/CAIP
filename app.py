@@ -244,7 +244,7 @@ def main():
 
     # === Sidebar Instructions ===
     with st.sidebar:
-        st.title("CAIP")
+        st.title("CAIP web tool")
         st.markdown(
             "### How to use\n"
             "**Single prediction**\n"
@@ -258,25 +258,25 @@ def main():
             "3. Click **Run batch prediction**.\n"
             "4. Download the prediction results as CSV.\n\n"
             "**Decision rule (per model):**\n"
-            "- Probability > 0.5 → *Anti-inflammatory activity*\n"
-            "- Probability ≤ 0.5 → *Non-anti-inflammatory activity*\n\n"
-            "**Consensus rule (CAIP):**\n"
-            "- All 6 active → *Anti-inflammatory activity*\n"
-            "- All 6 non-active → *Non-anti-inflammatory activity*\n"
-            "- Mixed predictions → *Inconclusive*"
+            "- If probability ≥ 0.5 → classified as **Anti-inflammatory activity**.\n"
+            "- If probability < 0.5 → classified as **Non-anti-inflammatory activity**.\n\n"
+            "**CAIP consensus decision:**\n"
+            "- If all 6 models predict *Anti-inflammatory activity* → final label: **Anti-inflammatory activity**.\n"
+            "- If all 6 models predict *Non-anti-inflammatory activity* → final label: **Non-anti-inflammatory activity**.\n"
+            "- If there is any disagreement between models → final label: **Inconclusive**."
         )
 
     st.title("CAIP: Consensus Anti-inflammatory Predictor")
 
-    st.write(
-        "This web server predicts the potential anti-inflammatory activity of a compound "
-        "based on its SMILES string.\n\n"
-        "Workflow:\n"
+    st.markdown(
+        "**This web application leverages a consensus of six machine learning and deep learning models "
+        "to predict the anti-inflammatory potential of compounds from their SMILES representations.**\n\n"
+        "**Workflow:**\n"
         "1. Convert the user-input SMILES to canonical SMILES.\n"
         "2. Compute ECFP, MACCS, and RDKit fingerprints.\n"
-        "3. Run 6 models (3 XGBoost + 3 BiLSTM).\n"
-        "4. Display individual model probabilities and labels.\n"
-        "5. Compute a consensus outcome based on all 6 models."
+        "3. Run six predictive models: three XGBoost classifiers and three BiLSTM neural networks.\n"
+        "4. Display individual model probabilities and per-model labels.\n"
+        "5. Compute a consensus outcome across all six models to determine the final prediction for each compound."
     )
 
     st.markdown("---")
@@ -355,15 +355,15 @@ def main():
                     st.markdown("---")
                     st.subheader("Consensus outcome (all 6 models)")
                     if consensus == "Inconclusive":
-                        st.warning("Outcome: Inconclusive (disagreement among models).")
+                        st.warning("**Outcome: Inconclusive** (disagreement among models).")
                     elif consensus == "Anti-inflammatory activity":
                         st.success(
-                            "Outcome: Anti-inflammatory activity "
+                            "**Outcome: Anti-inflammatory activity** "
                             "(all 6 models predict activity)."
                         )
                     else:
                         st.info(
-                            "Outcome: Non-anti-inflammatory activity "
+                            "**Outcome: Non-anti-inflammatory activity** "
                             "(all 6 models predict no activity)."
                         )
 
@@ -539,8 +539,9 @@ def main():
         st.markdown(
             """
 **Huynh Anh Duy**  
-Can Tho University, Vietnam  
-PhD Candidate, Khon Kaen University, Thailand  
+*College of Natural Sciences, Can Tho University, Vietnam.  
+**PhD Candidate, Faculty of Pharmaceutical Sciences,
+Khon Kaen University, Thailand.  
 *Cheminformatics, QSAR Modeling, Computational Drug Discovery and Toxicity Prediction*  
 📧 [huynhanhduy.h@kkumail.com](mailto:huynhanhduy.h@kkumail.com), [haduy@ctu.edu.vn](mailto:haduy@ctu.edu.vn)
 """
@@ -555,8 +556,8 @@ PhD Candidate, Khon Kaen University, Thailand
         st.markdown(
             """
 **Asst Prof. Dr. Tarapong Srisongkram**  
-Faculty of Pharmaceutical Sciences  
-Khon Kaen University, Thailand  
+*Faculty of Pharmaceutical Sciences,  
+Khon Kaen University, Thailand.  
 *Cheminformatics, QSAR Modeling, Computational Drug Discovery and Toxicity Prediction*  
 📧 [tarasri@kku.ac.th](mailto:tarasri@kku.ac.th)
 """
@@ -565,22 +566,20 @@ Khon Kaen University, Thailand
     # === Footer ===
     st.markdown("---")
     st.caption(
-        f"Python {sys.version.split()[0]} • CAIP – Consensus Anti-inflammatory Predictor • Research use only"
+        f"Python {sys.version.split()[0]} • CAIP – Consensus Anti-inflammatory Predictor"
     )
 
     st.markdown(
-        "<div style='text-align:center; font-size:14px; color:gray; line-height:1.6;'>"
-        "⚠️ <b>Disclaimer:</b> This platform is intended for <i>research purposes only</i>. "
-        "The information provided here does not substitute for professional medical advice, "
-        "diagnosis, or treatment. <br><br>"
-        "🧪 <b>Toxicity data and analyses</b> are experimental and should be interpreted "
-        "with caution. Use of this tool is restricted to qualified research personnel. <br><br>"
-        "📄 <b>Version:</b> 1.0.0 &nbsp; | &nbsp; <b>Created on:</b> Jan 01, 2026 <br>"
-        "© 2025 QSAR Lab &nbsp; | &nbsp; "
-        "</div>",
-        unsafe_allow_html=True,
-    )
-
+    "<div style='text-align:center; font-size:14px; color:gray; line-height:1.6;'>"
+    "⚠️ <b>Disclaimer:</b> This web application is intended for <i>**research use only**</i>. "
+    "The information provided does not constitute and must not be used as a substitute for "
+    "professional medical advice, diagnosis, or treatment. <br><br>"
+    "🧪 Use of this tool is restricted to trained and qualified research personnel. <br><br>"
+    "📄 <b>Version:</b> 1.0.0 &nbsp; | &nbsp; <b>Created on:</b> Jan 01, 2026 <br>"
+    "© 2026 QSAR Lab &nbsp; | &nbsp; All rights reserved."
+    "</div>",
+    unsafe_allow_html=True,
+)
 
 if __name__ == "__main__":
     main()
