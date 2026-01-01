@@ -280,9 +280,10 @@ def main():
     )
     
     st.markdown(
-    "<p style='color:red;'>"
+    "<p style='color:blue;'>"
     "<b>Important note:</b> By default, CAIP adopts a strict unanimity criterion "
-    "(all six models must agree). Users may optionally relax this requirement "
+    "(all six models must agree).<br>"
+     "However, users may optionally relax this requirement "
     "to a majority-vote rule (e.g., at least 3 out of 6 models predicting activity)."
     "</p>",
     unsafe_allow_html=True,
