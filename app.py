@@ -277,8 +277,15 @@ def main():
         "3. Run six predictive models: three XGBoost classifiers and three BiLSTM neural networks.\n"
         "4. Display individual model probabilities and per-model labels.\n"
         "5. Compute a consensus outcome across all six models to determine the final prediction for each compound. \n\n"
-        "_Important note:_ By default, CAIP adopts a strict unanimity criterion (all six models must agree). "
-    "Users may optionally relax this requirement to a majority-vote rule (e.g., at least 3 out of 6 models predicting activity).\n"
+    )
+    
+    st.markdown(
+    "<p style='color:red;'>"
+    "<b>Important note:</b> By default, CAIP adopts a strict unanimity criterion "
+    "(all six models must agree). Users may optionally relax this requirement "
+    "to a majority-vote rule (e.g., at least 3 out of 6 models predicting activity)."
+    "</p>",
+    unsafe_allow_html=True,
     )
 
     st.markdown("---")
